@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early-Warning Credit Risk Model — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="dark">
+
+<nav class="topbar"><div class="wrap"><a href="../index.html" class="brand">PRIYA / BA·AI</a></div></nav>
+<div class="ruler"></div>
+
+<header class="case-hero">
+  <div class="wrap">
+    <a href="../index.html#projects" class="back-link">← Back to projects</a>
+    <span class="eyebrow">Case Study · REQ-033 · Finance / Risk</span>
+    <h1 style="font-family:var(--display);font-size:clamp(30px,4vw,44px);margin:16px 0;">Early-Warning Credit Risk: Setting the Threshold a Bank Can Live With</h1>
+    <p style="max-width:60ch;color:var(--ink-text-dim);font-size:16.5px;">A 1-year-ahead corporate bankruptcy risk model, where the real BA work was defining what "risky enough to flag" means in business terms — not the model architecture.</p>
+    <div class="case-meta">
+      <div><span class="label">Role</span><span class="val">BA + Builder</span></div>
+      <div><span class="label">Domain</span><span class="val">Corporate Credit Risk</span></div>
+      <div><span class="label">Stack</span><span class="val">XGBoost · MLP · SMOTE/CTGAN</span></div>
+      <div><span class="label">Data</span><span class="val">78,682 firm-year obs., 1999–2018</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>The business problem</h2>
+    <p>A credit or risk team needs advance warning before a corporate borrower defaults — but bankruptcy is rare relative to the full portfolio, so a model optimized purely for accuracy will happily predict "not distressed" for everyone and still look accurate. The business requirement isn't "build a classifier" — it's "tell us, at a cost we can defend, which loans to review before it's too late," which means the decision threshold has to be set by the cost of a missed default, not by a default 0.5 cutoff.</p>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>BA artifacts produced</h2>
+    <div class="ba-artifact-grid">
+      <div class="artifact"><span class="kind">Requirements definition</span>Model must flag distress risk one year in advance using financial statement data already collected in normal reporting cycles — no new data source dependency, so the tool is usable without a systems change request.</div>
+      <div class="artifact"><span class="kind">Decision-threshold policy</span>Threshold tuned explicitly around the business asymmetry: a missed default (false negative) costs materially more than a false alarm that triggers an analyst review. Ablation studies were run specifically to justify where that line sits, rather than defaulting to standard classifier cutoffs.</div>
+      <div class="artifact"><span class="kind">Stakeholder framing</span>Positioned as a portfolio-review prioritization tool for Risk and Credit teams, not an automated approval/denial system — output routes a subset of the portfolio to human review rather than replacing underwriting judgment.</div>
+      <div class="artifact"><span class="kind">Model selection rationale</span>Compared XGBoost and MLP across raw features vs. engineered financial ratios, and evaluated three imbalance-handling strategies (class weighting, SMOTE, CTGAN synthetic augmentation) to document why the simpler, more interpretable approach was recommended over a more complex one.</div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>Outcome</h2>
+    <p>A tuned XGBoost model on a carefully selected set of original financial features outperformed the more complex data-augmentation approaches — a useful finding in itself: more synthetic data isn't automatically a better answer, and saying so kept the recommended solution simpler to explain to non-technical stakeholders.</p>
+    <div class="result-row">
+      <div class="stat"><strong>0.27</strong><span>F1-score (tuned XGBoost)</span></div>
+      <div class="stat"><strong>78.7K</strong><span>Firm-year observations</span></div>
+      <div class="stat"><strong>3</strong><span>Imbalance strategies compared</span></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

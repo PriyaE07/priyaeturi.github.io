@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>No-Show &amp; Readmission Risk — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="dark">
+
+<nav class="topbar"><div class="wrap"><a href="../index.html" class="brand">PRIYA / BA·AI</a></div></nav>
+<div class="ruler"></div>
+
+<header class="case-hero">
+  <div class="wrap">
+    <a href="../index.html#projects" class="back-link">← Back to projects</a>
+    <span class="eyebrow">Case Study · REQ-052 · Healthcare Ops</span>
+    <h1 style="font-family:var(--display);font-size:clamp(30px,4vw,44px);margin:16px 0;">No-Show &amp; Readmission Risk: From Analysis to a Business Case</h1>
+    <p style="max-width:60ch;color:var(--ink-text-dim);font-size:16.5px;">Two public healthcare datasets, analyzed for cost impact, then translated into a one-pager and user stories a clinic ops team would actually act on.</p>
+    <div class="case-meta">
+      <div><span class="label">Role</span><span class="val">BA / Data Analyst</span></div>
+      <div><span class="label">Datasets</span><span class="val">Kaggle No-Show · UCI Diabetes Readmit</span></div>
+      <div><span class="label">Method</span><span class="val">EDA · KPI Design · User Stories</span></div>
+      <div><span class="label">Records</span><span class="val">~110K + ~100K</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>The business problem</h2>
+    <p>Two related but distinct revenue leaks: patients who don't show up for scheduled outpatient appointments (wasted slot capacity), and patients readmitted within 30 days of a hospital stay (cost and, under CMS penalty programs, a direct reimbursement hit). Both are usually treated as "just build a churn model" problems — the BA work is turning that model into KPIs and workflows an ops team will actually track.</p>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>Datasets</h2>
+    <div class="ba-artifact-grid">
+      <div class="artifact"><span class="kind">Dataset 1 — No-shows</span>~110,500 outpatient appointments (Kaggle, Brazil public health system). Fields: scheduling lag, SMS reminder flag, age, neighborhood, chronic conditions (hypertension, diabetes, alcoholism), scholarship status. Baseline no-show rate in the raw data: ~20%.</div>
+      <div class="artifact"><span class="kind">Dataset 2 — Readmissions</span>~100,000 hospitalizations across 130 US hospitals, 1999–2008 (UCI/Kaggle Diabetes Readmission set). 55 features spanning diagnoses, medications, length of stay, and prior visit history; target is readmission within &lt;30 days, &gt;30 days, or none.</div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>BA artifacts produced</h2>
+    <div class="ba-artifact-grid">
+      <div class="artifact"><span class="kind">One-pager business case</span>Every no-show is a wasted appointment slot with real opportunity cost; every avoidable 30-day readmission risks a CMS reimbursement penalty on top of the direct cost of care. Neither is currently flagged before it happens — both are identified only after the fact, in monthly reporting.</div>
+      <div class="artifact"><span class="kind">Key EDA findings</span>No-show risk rises sharply as the gap between scheduling date and appointment date grows, and drops noticeably when an SMS reminder was sent — both are levers ops can actually pull, unlike demographic fields.</div>
+      <div class="artifact"><span class="kind">User stories (TO-BE dashboard)</span>"As a clinic scheduler, I want appointments flagged as high no-show-risk at booking time, so I can offer a reminder call instead of just an SMS." / "As a discharge planner, I want a readmission-risk score visible before discharge, so I can route high-risk patients to a follow-up call within 48 hours."</div>
+      <div class="artifact"><span class="kind">KPI definitions</span>No-show rate by scheduling-lag bucket; reminder-to-attendance lift; 30-day readmission rate by discharge diagnosis category; readmission-risk-flagged patients who received a follow-up contact within 48 hours (process adherence, not just outcome).</div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>Findings</h2>
+    <div class="result-row">
+      <div class="stat"><strong>~20%</strong><span>Baseline no-show rate</span></div>
+      <div class="stat"><strong>110K+</strong><span>Appointments analyzed</span></div>
+      <div class="stat"><strong>100K+</strong><span>Hospitalizations analyzed</span></div>
+    </div>
+    <p class="note">Both datasets are public and de-identified; used here for pattern analysis and KPI design, not to model any specific health system's actual performance.</p>
+  </div>
+</section>
+
+</body>
+</html>

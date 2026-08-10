@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Feature Requirements &amp; Validation — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="dark">
+
+<nav class="topbar"><div class="wrap"><a href="../index.html" class="brand">PRIYA / BA·AI</a></div></nav>
+<div class="ruler"></div>
+
+<header class="case-hero">
+  <div class="wrap">
+    <a href="../index.html#projects" class="back-link">← Back to projects</a>
+    <span class="eyebrow">Case Study · REQ-053 · AI Feature Requirements</span>
+    <h1 style="font-family:var(--display);font-size:clamp(30px,4vw,44px);margin:16px 0;">Claims-Status Chatbot: A Full Requirements &amp; Risk Package</h1>
+    <p style="max-width:60ch;color:var(--ink-text-dim);font-size:16.5px;">A BRD/FRD for an AI feature, written the way a BA should when the feature is AI-powered — with acceptance criteria, a UAT plan, and a dedicated risk, bias, and privacy section before a line of code is written.</p>
+    <div class="case-meta">
+      <div><span class="label">Role</span><span class="val">Business Analyst</span></div>
+      <div><span class="label">Feature type</span><span class="val">AI Claims-Status Chatbot</span></div>
+      <div><span class="label">Deliverable</span><span class="val">Requirements doc, not an app</span></div>
+      <div><span class="label">Artifacts</span><span class="val">BRD · FRD · UAT · Risk Register</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>The business problem</h2>
+    <p>Members call a health plan's support line most often to ask one question: "what's happening with my claim?" That's a high-volume, low-complexity query that ties up live agents who should be handling the calls that actually need judgment. An AI chatbot can answer it — but the moment it's wrong, it's wrong in a way that touches someone's medical bill, which means the requirements doc has to do more work than a typical feature spec.</p>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>BRD</h2>
+    <div class="ba-artifact-grid">
+      <div class="artifact"><span class="kind">Business objective</span>Deflect claims-status inquiries from live agents to a self-service AI assistant, reducing average call handle time and hold queue length without reducing member satisfaction with claim communication.</div>
+      <div class="artifact"><span class="kind">Success metrics</span>% of status inquiries fully resolved without agent escalation; member satisfaction score on chatbot-resolved sessions vs. agent-resolved; zero incidents of incorrect claim status or amount communicated to a member.</div>
+      <div class="artifact"><span class="kind">In / out of scope</span>In scope: claim status, expected processing time, what documentation is outstanding. Out of scope: appeals, benefit interpretation, anything requiring clinical judgment — those route to a live agent by design, not as a fallback.</div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>FRD &amp; acceptance criteria</h2>
+    <div class="ba-artifact-grid">
+      <div class="artifact"><span class="kind">Functional requirement</span>System shall retrieve claim status directly from the claims-processing system of record and present it verbatim; system shall not generate, infer, or paraphrase a status, amount, or date that is not present in the source record.</div>
+      <div class="artifact"><span class="kind">Acceptance criteria</span>Given a claim ID with a known status, when a member asks about it, then the chatbot returns the exact status and date from the source system. Given an ambiguous or multi-claim query, when the system cannot resolve a single claim with confidence, then it asks a clarifying question rather than guessing.</div>
+      <div class="artifact"><span class="kind">Escalation requirement</span>System shall detect out-of-scope requests (appeals, benefit disputes, clinical questions) and route to a live agent with conversation context, rather than attempting to answer.</div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>Risk, bias &amp; privacy section</h2>
+    <div class="ba-artifact-grid">
+      <div class="artifact"><span class="kind">Hallucination risk</span>Highest-severity risk: the assistant states an incorrect claim status or dollar amount. Mitigation: retrieval-only design (no generated numbers), plus a confidence threshold below which the system defers to a human instead of answering.</div>
+      <div class="artifact"><span class="kind">Bias risk</span>Escalation-routing logic must be tested across member language preference and communication channel to confirm non-English or lower-literacy members aren't disproportionately deflected to self-service without an easy path to a live agent.</div>
+      <div class="artifact"><span class="kind">Privacy</span>Chatbot session logs contain PHI by nature of the conversation; requires the same retention, access-control, and audit-log standards as a live agent call, not a lighter standard because it's "just a bot."</div>
+      <div class="artifact"><span class="kind">Accountability</span>Every chatbot-resolved session is logged with the source-system data it displayed, so a disputed conversation can be reconstructed and audited — same standard applied to a recorded agent call.</div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>UAT plan</h2>
+    <p>Test set built from three categories: (1) clean claim-status lookups with a known correct answer, verifying zero fabricated details; (2) ambiguous/multi-claim queries, verifying the system asks rather than guesses; (3) out-of-scope requests (appeals, clinical questions), verifying correct escalation with context preserved for the agent. Pass criteria: 100% accuracy on category 1 status/amount fields — this is the one category where "close enough" isn't an acceptable bar.</p>
+    <p class="note">Delivered as a requirements and risk package, in line with how AI features are actually scoped before build in regulated environments — no chatbot was built for this case study.</p>
+  </div>
+</section>
+
+</body>
+</html>

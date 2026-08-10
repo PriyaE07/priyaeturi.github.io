@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curascribe — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="dark">
+
+<nav class="topbar"><div class="wrap"><a href="../index.html" class="brand">PRIYA / BA·AI</a></div></nav>
+<div class="ruler"></div>
+
+<header class="case-hero">
+  <div class="wrap">
+    <a href="../index.html#projects" class="back-link">← Back to projects</a>
+    <span class="eyebrow">Case Study · REQ-014 · Healthcare</span>
+    <h1 style="font-family:var(--display);font-size:clamp(30px,4vw,44px);margin:16px 0;">Curascribe: Requirements &amp; Governance for an Ambient AI Documentation Platform</h1>
+    <p style="max-width:60ch;color:var(--ink-text-dim);font-size:16.5px;">A zero-backend, client-side clinical documentation tool that converts patient conversations into structured notes and billing codes — built and specified end-to-end, from BRD to UAT.</p>
+    <div class="case-meta">
+      <div><span class="label">Role</span><span class="val">BA + Builder</span></div>
+      <div><span class="label">Domain</span><span class="val">Healthcare</span></div>
+      <div><span class="label">Stack</span><span class="val">React · AssemblyAI · Claude API</span></div>
+      <div><span class="label">Artifacts</span><span class="val">BRD/FRD · RACI · UAT · Risk Assessment</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>The business problem</h2>
+    <p>Clinicians lose a significant share of every patient encounter to documentation — writing SOAP notes, assigning ICD-10/CPT billing codes, and summarizing visits after the fact. Existing ambient-scribe tools on the market are backend-heavy, raising PHI storage and compliance concerns before a clinic will even pilot them. The business ask: <em>can documentation be automated without asking a healthcare provider to trust a new server with patient data?</em></p>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>BA artifacts produced</h2>
+    <div class="ba-artifact-grid">
+      <div class="artifact"><span class="kind">BRD excerpt</span>System shall generate SOAP, HPI, and DAP-format notes from a live or uploaded audio session, with the clinician able to select note format per visit type. System shall never persist audio or transcript data outside the local browser session unless the user explicitly exports it.</div>
+      <div class="artifact"><span class="kind">AS-IS / TO-BE</span>AS-IS: clinician manually types notes post-visit (avg. added time per encounter), then separately looks up billing codes. TO-BE: ambient capture during the visit auto-drafts the note and codes in parallel, clinician reviews and signs off — documentation moves from after the visit to during it.</div>
+      <div class="artifact"><span class="kind">Stakeholder RACI</span>Clinician (Accountable — final sign-off on notes/codes), Compliance/Privacy Officer (Consulted — data-handling review), IT (Responsible — deployment), Patient (Informed — consent for recording).</div>
+      <div class="artifact"><span class="kind">Privacy risk assessment</span>Zero-backend architecture was chosen specifically to reduce the PHI attack surface — data lives in browser localStorage, not a server. Documented as the primary control in the risk register, with re-identification and device-loss risk flagged as residual items for a future release.</div>
+      <div class="artifact"><span class="kind">UAT highlights</span>Verified dual-verification billing code output against a manually-coded reference set; tested session reload behavior, patient-identity autocomplete accuracy, and Chart Q&amp;A responses against source transcripts before sign-off.</div>
+      <div class="artifact"><span class="kind">Functional scope</span>Ambient + telehealth recording (via display/audio capture), multi-format notes, ICD-10/CPT/E&amp;M/HCC code generation, Chart Q&amp;A, session history, PDF export.</div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <h2>Why this matters for the business</h2>
+    <p>The architectural decision — no backend — wasn't a technical shortcut, it was the answer to the actual business requirement: adoption in a compliance-sensitive environment depends on minimizing the data-handling story a clinic has to explain to its own legal team. Framing that decision as a requirement, not just an engineering choice, is the BA layer most AI demos skip.</p>
+    <div class="result-row">
+      <div class="stat"><strong>0</strong><span>Backend PHI stores</span></div>
+      <div class="stat"><strong>4</strong><span>Note formats supported</span></div>
+      <div class="stat"><strong>4</strong><span>Billing code types generated</span></div>
+    </div>
+    <p class="note">Built as a proof-of-concept / portfolio demo; figures reflect functional scope delivered, not a clinical trial or production deployment.</p>
+  </div>
+</section>
+
+</body>
+</html>
